@@ -1,2 +1,4 @@
 # python-vagalume
-Python wrapper for Vagalume API. http://api.vagalume.com.br/
+
+A simple Python client for Vagalume API. Also a command-line utility to search
+song lyrics and translations.
