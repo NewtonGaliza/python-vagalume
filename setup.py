@@ -6,8 +6,9 @@ setup(
     name='vagalume',
     version=version,
     description="Python wrapper for Vagalume API",
-    long_description=open("./README.md", "r").read()
+    long_description=open("./README.md", "r").read(),
     packages=['vagalume'],
+    scripts=['bin/vagalume'],
     license='MIT License',
     author='Diego Teixeira',
     author_email='diegoteixeir4@gmail.com',

@@ -40,7 +40,12 @@ def run_translation(language, artist_name, song_name):
     print_lyric(result.artist, result.song, translation)
 
 def find_lyric(artist, song):
-    return lyrics.find(artist, song) or sys.exit('Song not found.')
+    result = lyrics.find(artist, song)
+
+    if result.is_not_found():
+        sys.exit('Song not found.')
+
+    return result
 
 def get_translation(language, result):
     return result.get_translation_to(language) or sys.exit('Translation not found.')
