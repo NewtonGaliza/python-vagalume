@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-version = '0.0.3'
+version = '0.0.4'
 
 setup(
     name='vagalume',
@@ -9,6 +9,7 @@ setup(
     long_description=open("./README.md", "r").read(),
     packages=['vagalume'],
     scripts=['bin/vagalume'],
+    install_requires=open('requirements.txt').read().splitlines(),
     license='MIT License',
     author='Diego Teixeira',
     author_email='diegoteixeir4@gmail.com',
