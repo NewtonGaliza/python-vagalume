@@ -9,34 +9,32 @@ from vagalume import lyrics
 LINE = '-' * 80
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Command line wrapper for Vagalume.')
+    parser = argparse.ArgumentParser(description='Command line client for Vagalume.')
     subparsers = parser.add_subparsers(help='Commands', dest='command')
 
-    lyric_parser = subparsers.add_parser('lyric', help='Search a song lyric')
-    lyric_parser.add_argument('artist', action='store', help='Artist or band name')
-    lyric_parser.add_argument('song', action='store', help='Song name')
-
-    translation_parser = subparsers.add_parser('translation', help='Search a song translation')
-    translation_parser.add_argument('language', action='store', help='Translation language',
-        choices=lyrics.LANGUAGES.keys())
-    translation_parser.add_argument('artist', action='store', help='Artist or band name')
-    translation_parser.add_argument('song', action='store', help='Song name')
+    lyric_parser = subparsers.add_parser('lyric', help='search a song lyric')
+    lyric_parser.add_argument('artist', action='store', help='artist or band name')
+    lyric_parser.add_argument('song', action='store', help='song name')
+    lyric_parser.add_argument('-t', action='store', help='translate the lyric', 
+        nargs='?', default=None, const='pt-br', metavar='language', 
+        choices=lyrics.LANGUAGES.keys(), dest='translate_to')
 
     return parser.parse_args()
 
 def run(args):
     if args.command == 'lyric':
-        run_lyric(args.artist, args.song)
-    elif args.command == 'translation':
-        run_translation(args.language, args.artist, args.song)
+        run_lyric(args.artist, args.song, args.translate_to)
+    # Useless now, but commands to search artists, 
+    # albums etc. will be implemented soon.
 
-def run_lyric(artist_name, song_name):
+def run_lyric(artist_name, song_name, translate_to=None):
     result = find_lyric(artist_name, song_name)
-    print_lyric(result.artist, result.song)
+    
+    if translate_to:
+        translation = get_translation(translate_to, result)
+    else:
+        translation = None
 
-def run_translation(language, artist_name, song_name):
-    result = find_lyric(artist_name, song_name)
-    translation = get_translation(language, result)
     print_lyric(result.artist, result.song, translation)
 
 def find_lyric(artist, song):
